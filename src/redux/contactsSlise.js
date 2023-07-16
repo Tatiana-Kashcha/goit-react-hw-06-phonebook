@@ -1,45 +1,61 @@
+import { createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-const initialState = {
-  contacts: [],
-};
+// const initialState = {
+//   contacts: [],
+// };
 
-export const contactsReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'contacts/addUser':
-      return {
-        ...state,
-        contacts: [...state.contacts, action.payload],
-      };
-
-    case 'contacts/deleteUser':
-      return {
-        ...state,
-        contacts: state.contacts.filter(el => el.id !== action.payload),
-      };
-    default:
-      return state;
-  }
-};
-
-export const addUser = data => {
-  return {
-    type: 'contacts/addUser',
-    payload: {
-      id: nanoid(),
-      ...data,
+const contactsSlice = createSlice({
+  name: 'contacts',
+  initialState: {
+    contacts: [],
+  },
+  reducers: {
+    addUser(state, action) {
+      state.value += action.payload;
     },
-  };
-};
+    deleteUser(state, action) {
+      state.value += action.payload;
+    },
+  },
+});
 
-export const deleteUser = id => {
-  return {
-    type: 'contacts/deleteUser',
-    payload: id,
-  };
-};
+// export const contactsReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case 'contacts/addUser':
+//       return {
+//         ...state,
+//         contacts: [...state.contacts, action.payload],
+//       };
+
+//     case 'contacts/deleteUser':
+//       return {
+//         ...state,
+//         contacts: state.contacts.filter(el => el.id !== action.payload),
+//       };
+//     default:
+//       return state;
+//   }
+// };
+
+// export const addUser = data => {
+//   return {
+//     type: 'contacts/addUser',
+//     payload: {
+//       id: nanoid(),
+//       ...data,
+//     },
+//   };
+// };
+
+// export const deleteUser = id => {
+//   return {
+//     type: 'contacts/deleteUser',
+//     payload: id,
+//   };
+// };
 
 const persistConfig = {
   key: 'contacts',
@@ -48,5 +64,12 @@ const persistConfig = {
 
 export const contactsPersistReducer = persistReducer(
   persistConfig,
-  contactsReducer
+  contactsSlice.reducer
 );
+
+export const { addUser, deleteUser } = contactsSlice.actions;
+
+// export const contactsPersistReducer = persistReducer(
+//   persistConfig,
+//   contactsReducer
+// );
