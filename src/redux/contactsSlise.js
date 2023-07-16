@@ -3,10 +3,6 @@ import { nanoid } from 'nanoid';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-// const initialState = {
-//   contacts: [],
-// };
-
 export const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
@@ -15,7 +11,7 @@ export const contactsSlice = createSlice({
   reducers: {
     addUser: {
       reducer(state, action) {
-        state.push(action.payload);
+        state.contacts.push(action.payload);
       },
       prepare(data) {
         return {
@@ -29,18 +25,10 @@ export const contactsSlice = createSlice({
     deleteUser(state, action) {
       // const index = state.findIndex(user => user.id === action.payload);
       // state.splice(index, 1);
-      state.filter(el => el.id !== action.payload);
+      state.contacts.filter(el => el.id !== action.payload);
     },
   },
 });
-
-// export const contactsReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case 'contacts/addUser':
-//       return {
-//         ...state,
-//         contacts: [...state.contacts, action.payload],
-//       };
 
 //     case 'contacts/deleteUser':
 //       return {
@@ -50,16 +38,6 @@ export const contactsSlice = createSlice({
 //     default:
 //       return state;
 //   }
-// };
-
-// export const addUser = data => {
-//   return {
-//     type: 'contacts/addUser',
-//     payload: {
-//       id: nanoid(),
-//       ...data,
-//     },
-//   };
 // };
 
 // export const deleteUser = id => {
@@ -80,8 +58,3 @@ export const contactsPersistReducer = persistReducer(
 );
 
 export const { addUser, deleteUser } = contactsSlice.actions;
-
-// export const contactsPersistReducer = persistReducer(
-//   persistConfig,
-//   contactsReducer
-// );
