@@ -23,29 +23,13 @@ export const contactsSlice = createSlice({
       },
     },
     deleteUser(state, action) {
-      // const index = state.findIndex(user => user.id === action.payload);
-      // state.splice(index, 1);
-      state.contacts.filter(el => el.id !== action.payload);
+      const index = state.contacts.findIndex(
+        user => user.id === action.payload
+      );
+      state.contacts.splice(index, 1);
     },
   },
 });
-
-//     case 'contacts/deleteUser':
-//       return {
-//         ...state,
-//         contacts: state.contacts.filter(el => el.id !== action.payload),
-//       };
-//     default:
-//       return state;
-//   }
-// };
-
-// export const deleteUser = id => {
-//   return {
-//     type: 'contacts/deleteUser',
-//     payload: id,
-//   };
-// };
 
 const persistConfig = {
   key: 'contacts',
