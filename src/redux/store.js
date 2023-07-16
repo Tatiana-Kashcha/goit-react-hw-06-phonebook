@@ -3,7 +3,15 @@ import { configureStore } from '@reduxjs/toolkit';
 // import { devToolsEnhancer } from '@redux-devtools/extension';
 import { contactsPersistReducer } from './contactsSlise';
 import { filterReducer } from './filterSlise';
-import { persistStore } from 'redux-persist';
+import {
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 
 // const rootReducer = combineReducers({
 //   contactsUser: contactsPersistReducer,
@@ -18,6 +26,13 @@ export const store = configureStore({
   reducer: {
     contactsUser: contactsPersistReducer,
     filterUser: filterReducer,
+  },
+  middleware(getDefaultMiddleware) {
+    return getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    });
   },
 });
 
