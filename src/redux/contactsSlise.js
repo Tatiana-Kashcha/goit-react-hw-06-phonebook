@@ -7,7 +7,7 @@ import storage from 'redux-persist/lib/storage';
 //   contacts: [],
 // };
 
-const contactsSlice = createSlice({
+export const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
     contacts: [],
@@ -25,6 +25,11 @@ const contactsSlice = createSlice({
           },
         };
       },
+    },
+    deleteUser(state, action) {
+      // const index = state.findIndex(user => user.id === action.payload);
+      // state.splice(index, 1);
+      state.filter(el => el.id !== action.payload);
     },
   },
 });
